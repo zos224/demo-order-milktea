@@ -1,0 +1,84 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Store {
+    id Int @id @default(autoincrement())
+    name String
+    address String
+    openTime String
+    closeTime String
+    phone String
+    image String
+}
+
+model Type {
+    id Int @id @default(autoincrement())
+    name String
+    products Product[]
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  name String
+  image String
+  status Boolean
+  idType Int
+  type Type @relation(fields: [idType], references: [id], onDelete: Cascade)
+  productSizes ProductSize[]
+}
+
+model ProductSize {
+  id Int @id @default(autoincrement())
+  name String
+  price Int
+  idProduct Int 
+  product Product @relation(fields: [idProduct], references: [id], onDelete: Cascade)
+  orderItems OrderItem[]
+}
+
+model Topping {
+  id Int @id @default(autoincrement())
+  name String
+  price Int
+  orderToppings OrderTopping[]
+}
+
+model Order {
+  id Int @id  @default(autoincrement())
+  name String
+  phone String
+  address String
+  timeReceive String
+  type String @default("giaohang")
+  paymentMethod String
+  paymentStatus Boolean
+  note String?
+  total Float
+  status Boolean
+  orderItems OrderItem[]
+}
+
+model OrderItem { 
+  id Int @id @default(autoincrement())
+  idOrder Int
+  order Order @relation(fields: [idOrder], references: [id], onDelete: Cascade)
+  idProductSize Int 
+  productSize ProductSize @relation(fields: [idProductSize], references: [id], onDelete: Cascade)
+  quantity Int
+  orderTopping OrderTopping[]
+}
+
+model OrderTopping {
+  id Int @id @default(autoincrement())
+  idOrderItem Int
+  orderItem OrderItem @relation(fields: [idOrderItem], references: [id], onDelete: Cascade)
+  idTopping Int
+  topping Topping @relation(fields: [idTopping], references: [id], onDelete: Cascade)
+  quantity Int @default(1)
+}
