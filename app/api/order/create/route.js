@@ -46,7 +46,7 @@ export const POST = async (request) => {
             paymentStatus: false,
             note: data.note,
             total: data.total,
-            status: false
+            status: 0
         }
         const order = await prisma.Order.create({data: dataOrder})
         data.listProduct.forEach(async (item) => {

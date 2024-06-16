@@ -89,7 +89,7 @@ const OrderPageManager = () => {
                                     {order.type == "giaohang" ? "Giao hàng" : "Tự đến lấy"}
                                 </td>
                                 <td className="px-6 py-4">
-                                    {order.status ? "Đã hoàn thành" : "Chưa hoàn thành"}
+                                    {order.status == "0" ? "Chưa xác nhận" : order.status == "1" ? "Đã xác nhận" : order.status == "2" ? "Đang giao hàng" : "Đã hoàn thành"}
                                 </td>
                                 <td className="px-6 py-4">
                                     <Link className="hover:text-boxdark-2 hover:font-bold" href={"/admin/order/update/" + order.id}>Cập nhật</Link>

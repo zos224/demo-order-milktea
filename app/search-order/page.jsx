@@ -146,7 +146,10 @@ const SearchOrder = () => {
                                         <div class="w-full px-4 ">
                                             <div class=" flex gap-3 w-full mb-1">
                                                 <div className="font-bold">Trạng thái: </div>
-                                                <div className="">{item.status ? "Đã hoàn thành" : "Chưa hoàn thành"}</div>
+                                                {item.status == 0 && <div className="">Chưa xác nhận</div>}
+                                                {item.status == 1 && <div className="">Đã xác nhận</div>}
+                                                {item.status == 2 && <div className="">Đang giao hàng</div>}
+                                                {item.status == 3 && <div className="">Đã hoàn thành</div>}
                                             </div>
                                         </div>
                                 </div>

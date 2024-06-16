@@ -152,8 +152,10 @@ const CreateUpdateEvent = () => {
                                     <div className="font-bold">Trạng thái: </div>
                                     <div className="mx-5 mt-2">
                                         <select className="text-black px-3 py-1" value={order.status} onChange={(e) => setOrder({...order, status: e.target.value})}>
-                                            <option className="text-black" value={false}>Chưa hoàn thành</option>
-                                            <option className="text-black" value={true}>Đã hoàn thành</option>
+                                            <option className="text-black" value={0}>Chưa xác nhận</option>
+                                            <option className="text-black" value={1}>Đã xác nhận</option>
+                                            <option className="text-black" value={2}>Đang giao hàng</option>
+                                            <option className="text-black" value={3}>Đã hoàn thành</option>
                                         </select>
                                     </div>
                                 </div>

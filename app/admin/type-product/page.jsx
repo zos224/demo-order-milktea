@@ -86,7 +86,7 @@ const EventPage = () => {
                                     <button onClick={() => {setCurrentTopic({id: topic.id, name: topic.name}), setAction("update"), setOpenModalTopic(true)}} className="hover:text-boxdark-2 hover:font-bold">Cập nhật</button>
                                 </td>
                                 <td className="px-6 py-4">
-                                    <button onClick={() => {setOpenModal(!openModal); setDeleteLink("/api/topic/" + topic.id)}} className="hover:text-boxdark-2 hover:font-bold">Xóa</button>
+                                    <button onClick={() => {setOpenModal(!openModal); setDeleteLink("/api/type-product/" + topic.id)}} className="hover:text-boxdark-2 hover:font-bold">Xóa</button>
                                 </td>
                             </tr>
                                                     
