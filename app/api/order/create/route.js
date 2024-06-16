@@ -42,7 +42,7 @@ export const POST = async (request) => {
             address: data.address,
             timeReceive: data.orderTime,
             type: data.type,
-            paymentMethod: "COD",
+            paymentMethod: data.paymentMethod === "tienmat" ? "Tiền mặt" : "Chuyển khoản",
             paymentStatus: false,
             note: data.note,
             total: data.total,
@@ -53,14 +53,15 @@ export const POST = async (request) => {
             const dataOrderItem = {
                 idOrder: order.id,
                 idProductSize: item.size.id,
-                quantity: item.quantity
+                quantity: item.quantity,
+                note: item.note
             }
             const orderItem = await prisma.OrderItem.create({data: dataOrderItem})
             item.topping.forEach(async (topping) => {
                 const dataTopping = {
                     idOrderItem: orderItem.id,
                     idTopping: topping.id,
-                    quantity: topping.quantity
+                    quantity: topping.quantity,
                 }
                 await prisma.OrderTopping.create({data: dataTopping})
             })

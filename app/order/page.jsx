@@ -3,6 +3,7 @@
 import { CardContext } from "@/components/client/CardProvider"
 import ModalOrder from "@/components/client/ModalOrder"
 import ScrollSelect from "@/components/client/ScrollSelect"
+import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useState, useEffect, useContext } from "react"
 
@@ -41,7 +42,8 @@ const OrderPage = () => {
         phone: "",
         type: "giaohang",
         note: "",
-        orderTime: "asap"
+        orderTime: "asap",
+        paymentMethod: "tienmat"
     })
 
     useEffect(() => {
@@ -61,6 +63,8 @@ const OrderPage = () => {
         hour: "0",
         minute: "0"
     })
+
+    const [showModalPayment, setShowModalPayment] = useState(false)
 
     useEffect(() => {
         const fetchStoreData = async () => {
@@ -200,9 +204,12 @@ const OrderPage = () => {
                                 <div onClick={() => setShowModalTime(true)} className="text-amber-500 cursor-pointer">Sửa</div>
                             </div>
                         </div>
-                        <div className="md:mt-5 mt-2 rounded-md bg-gray p-3">
-                            <div className="font-semibold">Phương thức thanh toán</div>
-                            <div className="">Thanh toán tiền mặt</div>
+                        <div className="md:mt-5 mt-2 rounded-md bg-gray p-3 flex justify-between">
+                            <div>
+                                <div className="font-semibold">Phương thức thanh toán</div>
+                                <div className="">{order.paymentMethod == "tienmat" ? "Thanh toán tiền mặt khi nhận hàng" : "Chuyển khoản ngân hàng"}</div>
+                            </div>
+                            <div onClick={() => setShowModalPayment(true)} className="text-amber-500 cursor-pointer">Sửa</div>
                         </div>
                         <div className="md:mt-5 mt-2 rounded-md bg-gray p-3">
                             <div className="font-semibold">Món đã chọn</div>
@@ -367,6 +374,37 @@ const OrderPage = () => {
                     </div>
                 </div>
             )} 
+            {showModalPayment && (
+                <div tabindex="-1" aria-hidden="true" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full bg-opacity-30 bg-black">
+                    <div class="absolute w-full max-w-xl max-h-full top-48 left-1/2 -translate-x-1/2">
+                        <div class="relative bg-white rounded-lg shadow pb-4">
+                            <div class="flex items-center justify-between p-4 md:p-5 rounded-t dark:border-gray-600">
+                                <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
+                                    Hình thức thanh toán
+                                </h3>
+                                <button onClick={() => {setShowModalPayment(false)}} type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="default-modal">
+                                    <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                    </svg>
+                                    <span class="sr-only">Close modal</span>
+                                </button>
+                            </div>
+                            <div className="px-4 py-2 text-center">
+                                <select className="w-full px-4 py-2 rounded-md border-2 border-body" value={order.paymentMethod} onChange={(e) => setOrder({...order, paymentMethod: e.target.value})}>
+                                    <option value={"tienmat"}>Thanh toán tiền mặt</option>
+                                    <option value={"chuyenkhoan"}>Chuyển khoản ngân hàng</option>
+                                </select>
+                                {
+                                    order.paymentMethod === "chuyenkhoan" && (
+                                        <Image className="max-w-50 aspect-square mx-auto my-4" src="/images/bank.jpg" width={200} height={200} />
+                                    )
+                                }
+                                <button className="px-4 py-2 bg-amber-500 rounded-md text-white mt-4" onClick={() => setShowModalPayment(false)}>Xác nhận</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            )}
         </div>
     ))
 }

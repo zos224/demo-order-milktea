@@ -17,6 +17,7 @@ const ModalOrder = ({ idProduct, openModal, onClose, indexInCard }) => {
         quantity: 0,
         total: 0
     })
+    const [otherCustom, setOtherCustom] = useState(null)
     const [animation, setAnimation] = useState("animate-zoom-in")
     useEffect(() => {
         if (openModal) {
@@ -50,9 +51,17 @@ const ModalOrder = ({ idProduct, openModal, onClose, indexInCard }) => {
                 settopping(data)
             }
         }
+        const fetchOtherCustom = async () => {
+            const res = await fetch('/api/other-custom')
+            if (res.ok) {
+                const data = await res.json()
+                setOtherCustom(data.data)
+            }
+        }
         if (idProduct != 0) {
             fetchProduct()
             fetchTopping()
+            fetchOtherCustom()
         }
     
     }, [idProduct])
@@ -76,17 +85,24 @@ const ModalOrder = ({ idProduct, openModal, onClose, indexInCard }) => {
     }, [orderProduct.size, orderProduct.topping, orderProduct.quantity])
     
     const addProductToCard = () => {
+        const customs = document.querySelectorAll('.custom')
+        const otherCustom = []
+        customs.forEach((custom) => {
+            const value = custom.querySelector('input[type="radio"]').value
+            otherCustom.push(value)
+        })
+        const order = {...orderProduct, note: orderProduct.note + " " + otherCustom.join(", ")}
         if (index != -1) {
             const newCard = card.map((item, i) => {
                 if (i === index) {
-                    return orderProduct
+                    return order
                 }
                 return item
             })
             updateCard(newCard)
         }
         else {
-            updateCard([...card, orderProduct])
+            updateCard([...card, order])
         }
         closeModal()
     }
@@ -191,6 +207,23 @@ const ModalOrder = ({ idProduct, openModal, onClose, indexInCard }) => {
                                         ))}
                                     </div>
                                 </div>
+                                {otherCustom && (
+                                    otherCustom.map((custom, index) => (
+                                        <div key={index} className='mt-5 xl:w-3/5 lg:w-4/5 w-full custom'>
+                                            <div className=''><span className='font-semibold uppercase text-lg'>{custom.name}</span></div>
+                                            <div className='grid md:grid-cols-2 grid-cols-1 mt-5 md:gap-4'>
+                                                {custom.data.map((ct, i) => (
+                                                    <label className='flex gap-2 items-center' key={i}>
+                                                        <input defaultChecked={i == 0} className='peer sr-only' type="radio" value={custom.name + ": " + ct.name} name={custom.name} />
+                                                        <span className='w-5 h-5 peer-checked:bg-amber-500 peer-checked:border-none border-2 border-body rounded-md'> </span>
+                                                        <span className=''>{ct.name}</span>
+                                                    </label>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    )  
+                                )  
+                                )}
                                 <div className='mt-10 xl:w-3/5 lg:w-4/5 w-full relative'>
                                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-5 absolute left-1 top-1/2 -translate-y-1/2">
                                         <path strokeLinecap="round" strokeLinejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 0 0-3.375-3.375h-1.5A1.125 1.125 0 0 1 13.5 7.125v-1.5a3.375 3.375 0 0 0-3.375-3.375H8.25m0 12.75h7.5m-7.5 3H12M10.5 2.25H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 0 0-9-9Z" />

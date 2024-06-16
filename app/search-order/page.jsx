@@ -21,7 +21,6 @@ const SearchOrder = () => {
             })
             if (res.ok) {
                 const data = await res.json()
-                console.log(data)
                 setSearchResult(data)
                 setLoading(false)
             }
@@ -132,10 +131,16 @@ const SearchOrder = () => {
                                                                         <div key={index}>{topping.topping.name + " x" + topping.quantity}</div>
                                                                     ))}
                                                                 </div>
+                                                                <div className="w-full text-wrap">Ghi chú: {i.note}</div>
                                                             </div>
                                                         ))}
                                                     </div>
                                                 </div>
+                                            </div>
+                                        </div>
+                                        <div class="w-full px-4 mx-auto flex">
+                                            <div class="flex gap-3 w-full mb-1">
+                                                <div>Ghi chú: {item.note}</div>
                                             </div>
                                         </div>
                                         <div class="w-full px-4 ">

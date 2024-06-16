@@ -135,10 +135,16 @@ const CreateUpdateEvent = () => {
                                                             <div key={index}>{topping.topping.name + " x" + topping.quantity}</div>
                                                         ))}
                                                     </div>
+                                                    <div className="w-full">Ghi chú: {item.note}</div>
                                                 </div>
                                             ))}
                                         </div>
                                     </div>
+                                </div>
+                            </div>
+                            <div>
+                                <div class="w-full px-4 mx-auto mb-3">
+                                    Ghi chú: {order.note}
                                 </div>
                             </div>
                             <div class="w-full px-4 text-center">
