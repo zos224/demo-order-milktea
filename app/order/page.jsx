@@ -1,9 +1,9 @@
 "use client"
 
 import { CardContext } from "@/components/client/CardProvider"
-import ModalOrder from "@/components/client/ModalOrder"
 import ScrollSelect from "@/components/client/ScrollSelect"
 import Image from "next/image"
+import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState, useEffect, useContext } from "react"
 
@@ -11,28 +11,10 @@ const OrderPage = () => {
     const router = useRouter()
     const [storeData, setStoreData] = useState(null)
     const {card, updateCard, infoUser, updateInfoUser} = useContext(CardContext)
-    const [openModal, setOpenModal] = useState(false)
-    const [currentProduct, setCurrentProduct] = useState(0)
-    const [indexInCard, setIndexInCard] = useState(-1)
     const [showModalInfo, setShowModalInfo] = useState(false)
     const [addAddress, setAddAddress] = useState(false)
     const [showModalTime, setShowModalTime] = useState(false)
     const [loading, setLoading] = useState(true)
-    useEffect(() => {
-        if (indexInCard != -1) {
-            setCurrentProduct(card[indexInCard].idProduct)
-        }
-    }, [indexInCard])
-
-    useEffect(() => {
-        if (currentProduct != 0) {
-            setOpenModal(true)
-        }
-        else {
-            setOpenModal(false)
-            setIndexInCard(-1)
-        }
-    }, [currentProduct])
 
     const [order, setOrder] = useState({
         listProduct: [],
@@ -127,6 +109,11 @@ const OrderPage = () => {
         }
     }, [order.orderTime, orderTime])
 
+    const generateTempId = (id) => {
+        const time = new Date().getTime()
+        return time.toString().slice(0, 6) + id
+    }
+
     return (
         loading ? (
             <div class="flex items-center justify-center h-screen">
@@ -214,7 +201,7 @@ const OrderPage = () => {
                         <div className="md:mt-5 mt-2 rounded-md bg-gray p-3">
                             <div className="font-semibold">Món đã chọn</div>
                             {card.map((product, index) => (
-                                <div className={`mt-2 cursor-pointer ${index != card.length - 1 ? "border-b border-bodydark" : ""} `} onClick={() => setIndexInCard(index)} key={index}>
+                                <Link href={"/product/" + generateTempId(product.idProduct) + "/" + index} className={`mt-2 cursor-pointer ${index != card.length - 1 ? "border-b border-bodydark" : ""} `} key={index}>
                                     <div className="p-2">
                                         <div className="flex justify-between">
                                             <div className="font-semibold">
@@ -244,7 +231,7 @@ const OrderPage = () => {
                                             {formatCurrencyVND(product.total)}
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                         <div className="md:mt-5 mt-2 rounded-md bg-gray p-3">
@@ -262,7 +249,7 @@ const OrderPage = () => {
                             <div>{formatCurrencyVND(card.reduce((total, product) => total + product.total, 0))}</div>
                         </div>
                         <div className="border-b border-bodydark py-4 ">
-                            Chúng mình sẽ sớm liên hệ bạn để xác nhận phí vận chuyển bạn nhé!
+                            {storeData.fee}
                         </div>
                         <div className="flex justify-between font-bold mt-4 text-lg pb-20 md:pb-0">
                             <div>Tiền phải thanh toán</div>
@@ -272,7 +259,6 @@ const OrderPage = () => {
                     </div>
                 </div>
             </div>
-            <ModalOrder idProduct={currentProduct} openModal={openModal} onClose={() => setCurrentProduct(0)} indexInCard={indexInCard}/>
             {showModalInfo && (
                 <div tabindex="-1" aria-hidden="true" class="overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full h-full bg-opacity-30 bg-black">
                     <div class="absolute w-full max-w-xl max-h-full top-48 left-1/2 -translate-x-1/2">

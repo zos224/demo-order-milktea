@@ -10,7 +10,8 @@ const StoreDataPage = () => {
         closeTime: "",
         phone: '',
         image: '',
-        thanks: ''
+        thanks: '',
+        fee: ""
     })
     const [loading, setLoading] = useState(true)
     useEffect(() => {
@@ -28,7 +29,8 @@ const StoreDataPage = () => {
                         openTime: '',
                         phone: '',
                         image: '',
-                        thanks: ''
+                        thanks: '',
+                        fee: ""
                     })
                 }
                 setLoading(false)
@@ -110,6 +112,14 @@ const StoreDataPage = () => {
                             Lời cảm ơn
                         </label>
                         <input value={StoreData.thanks} type="text" placeholder="Lời cảm ơn" onChange={(e) => setStoreData({...StoreData, thanks: e.target.value})} class="border-0 px-3 py-3 placeholder-graydark text-black dark:bg-bodydark bg-white rounded text-sm shadow-4 focus:outline-none focus:ring w-full ease-linear transition-all duration-150" required />
+                        </div>
+                    </div>
+                    <div class="w-full px-4 mx-auto">
+                        <div class="relative w-full mb-3">
+                        <label class="block uppercase text-gray-200 text-xs font-bold mb-2">
+                            Nhắc phí vận chuyển
+                        </label>
+                        <input value={StoreData.fee} type="text" placeholder="Nhắc phí vận chuyển" onChange={(e) => setStoreData({...StoreData, fee: e.target.value})} class="border-0 px-3 py-3 placeholder-graydark text-black dark:bg-bodydark bg-white rounded text-sm shadow-4 focus:outline-none focus:ring w-full ease-linear transition-all duration-150" required />
                         </div>
                     </div>
                     <UploadImage label={"Ảnh bìa"} returnValue={(value) => setStoreData({...StoreData, image: value})} thumb={StoreData.image}/>

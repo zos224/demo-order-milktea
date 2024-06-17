@@ -17,6 +17,7 @@ model Store {
     phone String
     image String
     thanks String @default("")
+    fee String @default("")
 }
 
 model Type {

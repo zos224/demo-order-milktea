@@ -1,6 +1,7 @@
 import Image from 'next/image'
+import Link from 'next/link'
 import { useState, useEffect } from 'react'
-const ModalSearch = ({openModal, closeModal, setProduct}) => {
+const ModalSearch = ({openModal, closeModal}) => {
     const [search, setSearch] = useState("")
     const [products, setProducts] = useState([])
     const [productShow, setProductShow] = useState([])
@@ -31,6 +32,11 @@ const ModalSearch = ({openModal, closeModal, setProduct}) => {
         closeModal()
         setSearch("")
     }
+
+    const generateTempId = (id) => {
+        const time = new Date().getTime()
+        return time.toString().slice(0, 6) + id
+    }
     return (
         openModal && (
             <div tabindex="-1" className={`fixed bg-white top-0 left-0 right-0 z-50 overflow-x-hidden overflow-y-auto md:inset-0 h-full transition-opacity duration-300 ${animation} `}>
@@ -50,12 +56,12 @@ const ModalSearch = ({openModal, closeModal, setProduct}) => {
                     </div>
                     <div className='my-5 grid grid-cols-2 mt-20'>
                         {productShow.map((product, index) => (
-                            <div onClick={() => setProduct(product.id)} className='border p-2 border-gray' key={index}>
+                            <Link href={"/product/" + generateTempId(product.id)} className='border p-2 border-gray' key={index}>
                                 <Image className='rounded-md w-full aspect-4/3 object-cover' src={product.image} alt={product.name} width={300} height={300} />
                                 <div className='text-center font-semibold mt-2'>
                                     {product.name}
                                 </div>
-                            </div>
+                            </Link>
                         ))}
                     </div>
                 </div>
