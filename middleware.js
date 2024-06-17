@@ -15,8 +15,7 @@ export default withAuth(
         return NextResponse.redirect(new URL('/admin/signin', req.url))
       }
     }
-    if (req.nextUrl.pathname.includes("/product/createOrUpdate") || req.nextUrl.pathname.includes("/type-product/createOrUpdate") || req.nextUrl.pathname.includes("/topping/createOrUpdate") ||
-    req.nextUrl.pathname.includes("/store/createOrUpdate")) {
+    if (req.nextUrl.pathname.includes("/product/createOrUpdate") || req.nextUrl.pathname.includes("/type-product/createOrUpdate") || req.nextUrl.pathname.includes("/topping/createOrUpdate")) {
       if (req.nextauth.token.role != "admin") {
         return NextResponse.redirect(new URL('/', req.url))
       }
@@ -34,4 +33,4 @@ export default withAuth(
   }
 )
 
-export const config = { matcher: ["/admin/:path*", "/api/product/createOrUpdate", "/api/type-product/createOrUpdate", "/api/topping/createOrUpdate", "/api/store"] }
+export const config = { matcher: ["/admin/:path*", "/api/product/createOrUpdate", "/api/type-product/createOrUpdate", "/api/topping/createOrUpdate"] }

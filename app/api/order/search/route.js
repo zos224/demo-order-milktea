@@ -1,3 +1,4 @@
+import prisma from "@/db/prisma"
 export const POST = async (request) => {
     const {phone} = await request.json()
     const orders = await prisma.Order.findMany({

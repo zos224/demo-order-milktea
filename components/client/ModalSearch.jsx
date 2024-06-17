@@ -48,7 +48,7 @@ const ModalSearch = ({openModal, closeModal, setProduct}) => {
                             <input value={search} onChange={(e) => setSearch(e.target.value)} type="text" className="w-full bg-gray text-black outline-none placeholder:text-body" placeholder="Bạn đang cần tìm món gì?"/>
                         </div>
                     </div>
-                    <div className='my-5 grid grid-cols-2'>
+                    <div className='my-5 grid grid-cols-2 mt-20'>
                         {productShow.map((product, index) => (
                             <div onClick={() => setProduct(product.id)} className='border p-2 border-gray' key={index}>
                                 <Image className='rounded-md w-full aspect-4/3 object-cover' src={product.image} alt={product.name} width={300} height={300} />

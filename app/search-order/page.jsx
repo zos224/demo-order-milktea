@@ -74,7 +74,7 @@ const SearchOrder = () => {
                         <div className="">
                             {searchResult.map((item, index) => (
                                 <div key={index} className="mt-5 rounded-md bg-gray shadow-md p-2"> 
-                                    <div class="w-full px-4 mx-auto flex">
+                                    <div class="w-full px-4 mx-auto flex md:flex-row flex-col">
                                             <div class="flex gap-3 w-full mb-1">
                                                 <div>Tên người nhận: </div>
                                                 <div>{item.name}</div>
@@ -92,7 +92,7 @@ const SearchOrder = () => {
                                                 </div>
                                             </div>
                                         )}
-                                        <div class="w-full px-4 mx-auto flex">
+                                        <div class="w-full px-4 mx-auto flex md:flex-row flex-col">
                                             <div class="flex gap-3 w-full mb-1">
                                                 <div>Loại đơn hàng: </div>
                                                 <div>{item.type == "giaohang" ? "Giao hàng" : "Tự đến lấy"}</div>
@@ -102,7 +102,7 @@ const SearchOrder = () => {
                                                 <div>{item.timeReceive}</div>
                                             </div>
                                         </div>
-                                        <div class="w-full px-4 mx-auto flex">
+                                        <div class="w-full px-4 mx-auto flex md:flex-row flex-col">
                                             <div class="flex gap-3 w-full mb-1">
                                                 <div>Phương thức thanh toán: </div>
                                                 <div>{item.paymentMethod}</div>
@@ -121,9 +121,9 @@ const SearchOrder = () => {
                                             <div class="w-full px-4 mx-auto flex">
                                                 <div class="gap-3 w-full mb-1">
                                                     <div className="font-bold">Sản phẩm: </div>
-                                                    <div className="mx-5 mt-2">
+                                                    <div className="mx-5">
                                                         {item.orderItems.map((i, index) => (
-                                                            <div key={index} class="flex gap-3 w-full mb-1">
+                                                            <div key={index} className={`flex md:gap-3 w-full mb-1 md:flex-row flex-col py-2 ${index == item.orderItems.length - 1 ? "" : "border-b"} `}>
                                                                 <div className="w-full">{i.productSize.product.name + " - " + i.productSize.name}</div>
                                                                 <div className="w-full">Số lượng: {i.quantity}</div>
                                                                 <div className="w-full">Topping: 

@@ -28,6 +28,7 @@ const HomePage = () => {
         const fetchStoreData = async () => {
             const response = await fetch('/api/store')
             if (response.ok) {
+                console.log(response)
                 const data = await response.json()
                 if (data) {
                     setStoreData(data)
@@ -37,6 +38,7 @@ const HomePage = () => {
         const fetchTypes = async () => {
             const response = await fetch('/api/type-product/full')
             if (response.ok) {
+                console.log(response)
                 const data = await response.json()
                 if (data) {
                     setTypes(data)
