@@ -28,7 +28,6 @@ const HomePage = () => {
         const fetchStoreData = async () => {
             const response = await fetch('/api/store')
             if (response.ok) {
-                console.log(response)
                 const data = await response.json()
                 if (data) {
                     setStoreData(data)
@@ -38,7 +37,6 @@ const HomePage = () => {
         const fetchTypes = async () => {
             const response = await fetch('/api/type-product/full')
             if (response.ok) {
-                console.log(response)
                 const data = await response.json()
                 if (data) {
                     setTypes(data)
@@ -136,8 +134,7 @@ const HomePage = () => {
         const handleScrollMenu = () => {
             const stickyElement = document.querySelector('.menu');
             const childElement = stickyElement.querySelector('.visible-when-sticky');
-            
-            if (stickyElement.getBoundingClientRect().top <= 0) {
+            if (stickyElement.getBoundingClientRect().top <= 0.5) {
                 // Div cha đang sticky
                 if (childElement.classList.contains('hidden')) {
                     childElement.classList.remove('hidden');
@@ -145,11 +142,12 @@ const HomePage = () => {
                 }
             } else {
                 // Div cha không phải là sticky
-                childElement.classList.remove('block');
-                childElement.classList.add('hidden');
+                if (childElement.classList.contains('block')) {
+                    childElement.classList.remove('block');
+                    childElement.classList.add('hidden');
+                }
             }
         }
-
         window.addEventListener('scroll', handleScrollMenu);
 
         return () => {
