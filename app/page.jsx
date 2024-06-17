@@ -139,8 +139,10 @@ const HomePage = () => {
             
             if (stickyElement.getBoundingClientRect().top <= 0) {
                 // Div cha đang sticky
-                childElement.classList.remove('hidden');
-                childElement.classList.add('block');
+                if (childElement.classList.contains('hidden')) {
+                    childElement.classList.remove('hidden');
+                    childElement.classList.add('block');
+                }
             } else {
                 // Div cha không phải là sticky
                 childElement.classList.remove('block');
