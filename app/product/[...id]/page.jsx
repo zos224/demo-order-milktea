@@ -3,7 +3,6 @@ import Image from 'next/image';
 import { useContext, useEffect, useState } from 'react';
 import { CardContext } from '@/components/client/CardProvider';
 import { useParams, useRouter } from 'next/navigation';
-import Link from 'next/link';
 const ProductPage = () => {
     const params = useParams()
     const router = useRouter()
@@ -16,27 +15,14 @@ const ProductPage = () => {
         name: "",
         topping: [],
         quantity: 0,
-        total: 0
+        total: 0,
+        note: ""
     })
     const [otherCustom, setOtherCustom] = useState(null)
     const {card, updateCard} = useContext(CardContext)
+    const [noteCustom, setNoteCustom] = useState(null)
+
     useEffect(() => {
-        const fetchProduct = async () => {
-            const productId = params.id[0].slice(6)
-            setLoading(true)
-            const res = await fetch('/api/product/' + productId)
-            if (res.ok) {
-                const data = await res.json()
-                setCurrentProduct(data)
-                if (params.id[1] ) {
-                    const product = card[params.id[1]]
-                    setOrderProduct({...orderProduct, idProduct: productId, quantity: product.quantity, total: product.total, size: product.size, topping: product.topping, note: ""})
-                }
-                else {
-                    setOrderProduct({...orderProduct, idProduct: productId, total: data.price, quantity: 1, name: data.name, image: data.image, size: data.productSizes[0], topping: [], note: ""})
-                } 
-            }
-        }
         const fetchTopping = async () => {
             const res = await fetch('/api/topping/all')
             if (res.ok) {
@@ -51,13 +37,39 @@ const ProductPage = () => {
                 setOtherCustom(data.data)
             }
         }
-        if (params.id[0]) {
-            fetchProduct()
+
+        if (!topping && !otherCustom) {
             fetchTopping()
             fetchOtherCustom()
         }
+    }, [])
+
+    useEffect(() => {
+        const fetchProduct = async () => {
+            const productId = params.id[0].slice(6)
+            setLoading(true)
+            const res = await fetch('/api/product/' + productId)
+            if (res.ok) {
+                const data = await res.json()
+                setCurrentProduct(data)
+                if (params.id[1] && card.length > 0) {
+                    const product = card[params.id[1]]
+                    const noteSize = product.note.split(", ")
+                    const note = noteSize.slice(0, noteSize.length - otherCustom.length).join(", ")
+                    setNoteCustom(noteSize.slice(noteSize.length - otherCustom.length))
+                    setOrderProduct({...orderProduct, idProduct: productId, name: product.name, quantity: product.quantity, total: product.total, image: product.image, size: product.size, topping: product.topping, note: note})
+                }
+                else {
+                    setOrderProduct({...orderProduct, idProduct: productId, total: data.price, quantity: 1, name: data.name, image: data.image, size: data.productSizes[0], topping: [], note: ""})
+                } 
+            }
+        }
+        
+        if (params.id[0] && card && otherCustom) {
+            fetchProduct()
+        }
     
-    }, [params.id])
+    }, [params.id, card, otherCustom])
 
     useEffect(() => {
         if (currentProduct != null && orderProduct.quantity != 0 && topping != null) {
@@ -76,10 +88,10 @@ const ProductPage = () => {
         const customs = document.querySelectorAll('.custom')
         const otherCustom = []
         customs.forEach((custom) => {
-            const value = custom.querySelector('input[type="radio"]').value
+            const value = custom.querySelector('input[type="radio"]:checked').value
             otherCustom.push(value)
         })
-        const order = {...orderProduct, note: orderProduct.note + " " + otherCustom.join(", ")}
+        const order = {...orderProduct, note: orderProduct.note + ", " + otherCustom.join(", ")}
         if (params.id[1]) {
             const newCard = card.map((item, i) => {
                 if (i == params.id[1]) {
@@ -131,7 +143,7 @@ const ProductPage = () => {
                                             {currentProduct.productSizes.map((size, index) => (
                                                 <div className='w-full' key={index}>
                                                     <label className="cursor-pointer w-full ">
-                                                        <input defaultChecked={index == 0} type="radio" className="peer sr-only" name="size" onChange={(e) => setOrderProduct({...orderProduct, size: size})}/>
+                                                        <input defaultChecked={orderProduct.size.id == size.id} type="radio" className="peer sr-only" name="size" onChange={(e) => setOrderProduct({...orderProduct, size: size})}/>
                                                         <div className="select-none rounded-md bg-white px-3 py-2 text-gray-600 ring-2 ring-transparent transition-all hover:shadow peer-checked:text-amber-500 peer-checked:ring-amber-500 peer-checked:ring-2">
                                                             <div className="flex gap-3 w-full">
                                                                 <div className="flex items-center">
@@ -203,7 +215,7 @@ const ProductPage = () => {
                                                 <div className='grid md:grid-cols-2 grid-cols-1 mt-5 gap-4'>
                                                     {custom.data.map((ct, i) => (
                                                         <label className='flex gap-2 items-center' key={i}>
-                                                            <input defaultChecked={i == 0} className='peer sr-only' type="radio" value={custom.name + ": " + ct.name} name={custom.name} />
+                                                            <input defaultChecked={noteCustom.find(note => note.split(": ")[0] == custom.name && note.split(": ")[1] == ct.name) != null} className='peer sr-only' type="radio" value={custom.name + ": " + ct.name} name={custom.name} />
                                                             <span className='w-5 h-5 peer-checked:bg-amber-500 peer-checked:border-none border-2 border-body rounded-md'> </span>
                                                             <span className=''>{ct.name}</span>
                                                         </label>
