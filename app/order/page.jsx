@@ -15,7 +15,7 @@ const OrderPage = () => {
     const [addAddress, setAddAddress] = useState(false)
     const [showModalTime, setShowModalTime] = useState(false)
     const [loading, setLoading] = useState(true)
-
+    const [errorAlert, setErrorAlert] = useState(false)
     const [order, setOrder] = useState({
         listProduct: [],
         total: 0,
@@ -94,11 +94,24 @@ const OrderPage = () => {
     }
 
     const processOrder = async () => {
+        if (order.type == "giaohang") {
+            if (order.name == "" || order.address == "" || order.phone == "") {
+                setErrorAlert(true)
+                return
+            }
+        }
+        else if (order.type == "tudenlay") {
+            if (order.name == "" || order.phone == "") {
+                setErrorAlert(true)
+                return
+            }
+        }
         const response = await fetch('/api/order/create', {
             method: 'POST',
             body: JSON.stringify(order)
         })
         if (response.ok) {
+            setErrorAlert(false)
             router.push("/order/success")
         }
     }
@@ -256,6 +269,11 @@ const OrderPage = () => {
                             <div>{formatCurrencyVND(card.reduce((total, product) => total + product.total, 0))}</div>
                         </div>
                         <button onClick={() => processOrder()} className="mt-4 w-full py-3 bg-amber-500 font-semibold rounded-md text-white fixed md:static bottom-0 left-0 right-0">Đặt hàng</button>
+                        { 
+                            errorAlert && (
+                                <div className="mt-5 text-red text-center">Vui lòng nhập đầy đủ thông tin liên lạc!</div>
+                            )
+                        }
                     </div>
                 </div>
             </div>
