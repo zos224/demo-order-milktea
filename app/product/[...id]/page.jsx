@@ -60,6 +60,7 @@ const ProductPage = () => {
                     setOrderProduct({...orderProduct, idProduct: productId, name: product.name, quantity: product.quantity, total: product.total, image: product.image, size: product.size, topping: product.topping, note: note})
                 }
                 else {
+                    setNoteCustom([])
                     setOrderProduct({...orderProduct, idProduct: productId, total: data.price, quantity: 1, name: data.name, image: data.image, size: data.productSizes[0], topping: [], note: ""})
                 } 
             }
@@ -215,7 +216,7 @@ const ProductPage = () => {
                                                 <div className='grid md:grid-cols-2 grid-cols-1 mt-5 gap-4'>
                                                     {custom.data.map((ct, i) => (
                                                         <label className='flex gap-2 items-center' key={i}>
-                                                            <input defaultChecked={noteCustom.find(note => note.split(": ")[0] == custom.name && note.split(": ")[1] == ct.name) != null} className='peer sr-only' type="radio" value={custom.name + ": " + ct.name} name={custom.name} />
+                                                            <input defaultChecked={noteCustom.length == 0 ? index == 0 : noteCustom.find(note => note.split(": ")[0] == custom.name && note.split(": ")[1] == ct.name) != null} className='peer sr-only' type="radio" value={custom.name + ": " + ct.name} name={custom.name} />
                                                             <span className='w-5 h-5 peer-checked:bg-amber-500 peer-checked:border-none border-2 border-body rounded-md'> </span>
                                                             <span className=''>{ct.name}</span>
                                                         </label>
