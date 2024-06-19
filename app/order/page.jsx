@@ -264,16 +264,16 @@ const OrderPage = () => {
                         <div className="border-b border-bodydark py-4 ">
                             {storeData.fee}
                         </div>
-                        <div className="flex justify-between font-bold mt-4 text-lg pb-20 md:pb-0">
+                        <div className={'flex justify-between font-bold mt-4 text-lg ${errorAlert ? "" : "pb-20 md:pb-0"}'}>
                             <div>Tiền phải thanh toán</div>
                             <div>{formatCurrencyVND(card.reduce((total, product) => total + product.total, 0))}</div>
                         </div>
-                        <button onClick={() => processOrder()} className="mt-4 w-full py-3 bg-amber-500 font-semibold rounded-md text-white fixed md:static bottom-0 left-0 right-0">Đặt hàng</button>
                         { 
                             errorAlert && (
-                                <div className="mt-5 text-red text-center">Vui lòng nhập đầy đủ thông tin liên lạc!</div>
+                                <div className="mt-5 text-red text-center pb-20 md:pb-0">Vui lòng nhập đầy đủ thông tin liên lạc!</div>
                             )
                         }
+                        <button onClick={() => processOrder()} className="mt-4 w-full py-3 bg-amber-500 font-semibold rounded-md text-white fixed md:static bottom-0 left-0 right-0">Đặt hàng</button>
                     </div>
                 </div>
             </div>
