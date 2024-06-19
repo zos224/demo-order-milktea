@@ -179,7 +179,7 @@ const OrderPage = () => {
                                     order.type == "giaohang" ? (
                                         <div className="flex justify-between w-full items-center">
                                             <div>
-                                                <div className="">{order.name + " - " + order.phone}</div>
+                                                <div className="">{order.name != "" ? order.name + " - " + order.phone : "Địa chỉ giao hàng"}</div>
                                                 <div className="text-sm">{order.address}</div>
                                             </div>
                                             <div onClick={() => setShowModalInfo(true)} className="text-amber-500 cursor-pointer flex justify-end">Sửa</div>
@@ -400,7 +400,7 @@ const OrderPage = () => {
                                 </select>
                                 {
                                     order.paymentMethod === "chuyenkhoan" && (
-                                        <Image className="max-w-50 aspect-square mx-auto my-4" src="/images/bank.jpg" width={200} height={200} />
+                                        <Image className="max-w-50 aspect-square mx-auto my-4" src="/images/2B5EC6CB-80F8-4493-B6A5-451294E92BCD.jpeg" width={200} height={200} />
                                     )
                                 }
                                 <button className="px-4 py-2 bg-amber-500 rounded-md text-white mt-4" onClick={() => setShowModalPayment(false)}>Xác nhận</button>
