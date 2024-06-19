@@ -191,7 +191,7 @@ const HomePage = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="#f59e0b" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ffffff" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
                             </svg>
-                            Đơn hàng
+                            Kiểm tra đơn hàng
                         </Link>
                     </div>
                 </div>
@@ -221,7 +221,7 @@ const HomePage = () => {
                             </div>
                         </div>
                     </div>
-                    <div className=" md:p-4 bg-white rounded-md md:w-6/12 w-full">
+                    <div className=" md:p-4 md:pb-0 pb-24  bg-white rounded-md md:w-6/12 w-full">
                         <div className="md:flex hidden p-1 gap-2 border-gray bg-gray rounded-md">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6 mx-2">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z" />
@@ -310,7 +310,7 @@ const HomePage = () => {
                             <svg xmlns="http://www.w3.org/2000/svg" fill="#f59e0b" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ffffff" className="size-6">
                                 <path strokeLinecap="round" strokeLinejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25M16.5 7.5V4.875c0-.621-.504-1.125-1.125-1.125H4.125C3.504 3.75 3 4.254 3 4.875V18a2.25 2.25 0 0 0 2.25 2.25h13.5M6 7.5h3v3H6v-3Z" />
                             </svg>
-                            Đơn hàng
+                            KT Đơn hàng
                         </Link>
                         <Link className="bg-amber-500 flex gap-2 rounded-md px-2 py-3 text-white" href="/order">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="#f59e0b" viewBox="0 0 24 24" strokeWidth={1.5} stroke="#ffffff" className="size-6">
