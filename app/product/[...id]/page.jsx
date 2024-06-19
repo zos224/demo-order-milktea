@@ -72,10 +72,10 @@ const ProductPage = () => {
     }, [params.id, card, otherCustom])
 
     useEffect(() => {
-        if (currentProduct != null && orderProduct.quantity != 0 && topping != null) {
+        if (currentProduct != null && orderProduct.quantity != 0 && topping != null && noteCustom != null) {
             setLoading(false)
         }
-    }, [orderProduct.quantity, currentProduct, topping])
+    }, [orderProduct.quantity, currentProduct, topping, noteCustom])
 
     useEffect(() => {
         if (orderProduct.size) {
