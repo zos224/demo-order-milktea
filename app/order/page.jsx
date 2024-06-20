@@ -400,7 +400,7 @@ const OrderPage = () => {
                                 </select>
                                 {
                                     order.paymentMethod === "chuyenkhoan" && (
-                                        <Image className="max-w-50 aspect-square mx-auto my-4" src="/images/2B5EC6CB-80F8-4493-B6A5-451294E92BCD.jpeg" width={200} height={200} />
+                                        <Image className="max-w-50 aspect-square mx-auto my-4" src="/images/2B5445C0-4640-412C-BE88-A173CBA80428.jpeg" width={200} height={200} />
                                     )
                                 }
                                 <button className="px-4 py-2 bg-amber-500 rounded-md text-white mt-4" onClick={() => setShowModalPayment(false)}>Xác nhận</button>
