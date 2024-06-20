@@ -16,6 +16,7 @@ const OrderPage = () => {
     const [showModalTime, setShowModalTime] = useState(false)
     const [loading, setLoading] = useState(true)
     const [errorAlert, setErrorAlert] = useState(false)
+    const [submiting, setSubmiting] = useState(false)
     const [order, setOrder] = useState({
         listProduct: [],
         total: 0,
@@ -112,9 +113,16 @@ const OrderPage = () => {
         })
         if (response.ok) {
             setErrorAlert(false)
+            setSubmiting(false)
             router.push("/order/success")
         }
     }
+
+    useEffect(() => {
+        if (submiting) {
+           processOrder()
+        }
+    }, [submiting])
 
     useEffect(() => {
         if (order.orderTime != "asap") {
@@ -264,7 +272,7 @@ const OrderPage = () => {
                         <div className="border-b border-bodydark py-4 ">
                             {storeData.fee}
                         </div>
-                        <div className={'flex justify-between font-bold mt-4 text-lg ${errorAlert ? "" : "pb-20 md:pb-0"}'}>
+                        <div className={'flex justify-between font-bold mt-4 text-lg ${errorAlert ? "pb-10" : "pb-20 md:pb-0"}'}>
                             <div>Tiền phải thanh toán</div>
                             <div>{formatCurrencyVND(card.reduce((total, product) => total + product.total, 0))}</div>
                         </div>
@@ -273,7 +281,7 @@ const OrderPage = () => {
                                 <div className="mt-5 text-red text-center pb-20 md:pb-0">Vui lòng nhập đầy đủ thông tin liên lạc!</div>
                             )
                         }
-                        <button onClick={() => processOrder()} className="mt-4 w-full py-3 bg-amber-500 font-semibold rounded-md text-white fixed md:static bottom-0 left-0 right-0">Đặt hàng</button>
+                        <button disabled={submiting} onClick={() => setSubmiting(true)} className="mt-4 w-full py-3 bg-amber-500 font-semibold rounded-md text-white fixed md:static bottom-0 left-0 right-0">Đặt hàng</button>
                     </div>
                 </div>
             </div>
